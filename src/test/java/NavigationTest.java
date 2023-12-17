@@ -1,11 +1,9 @@
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
+import model.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.TestData;
 
-import static utils.ProjectConstants.*;
+import static utils.ProjectConstant.*;
 
 public class NavigationTest extends BaseTest {
     @Test
@@ -14,36 +12,37 @@ public class NavigationTest extends BaseTest {
         Assert.assertEquals(getPage().title(), BASE_TITLE);
     }
 
-    @Test(dependsOnMethods = "testHomePage_URLAndTitle_AsExpected")
-    public void testClickLogoNavigatesToHome() {
-        getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("men").setExact(true)).click();
-        String menUrl = getPage().url();
-        String menTitle = getPage().title();
-        getPage().locator("nav .brand-logo").click();
+    @Test(
+            dataProvider =  "NavigationBarTestData",
+            dataProviderClass = TestData.class,
+            dependsOnMethods = "testHomePage_URLAndTitle_AsExpected")
+    public void testClickLogoNavigatesToHome(String menu, String expectedURL, String expectedTitle) {
+        HomePage homePage = new HomePage(getPage());
+        homePage.clickMenu(menu);
+        homePage.clickLogo();
 
-        Assert.assertNotEquals(menUrl, BASE_URL);
-        Assert.assertNotEquals(menTitle, BASE_TITLE);
+        if (!menu.equals("Home") && !menu.equals("About")) {
+            Assert.assertNotEquals(expectedURL, BASE_URL);
+            Assert.assertNotEquals(expectedTitle, BASE_TITLE);
+        }
         Assert.assertEquals(getPage().url(), BASE_URL);
         Assert.assertEquals(getPage().title(), BASE_TITLE);
     }
 
     @Test(
-            dataProvider =  "NavigationBarAndHomeLinksTestData",
+            dataProvider =  "NavigationBarTestData",
             dataProviderClass = TestData.class,
             dependsOnMethods = "testHomePage_URLAndTitle_AsExpected"
     )
-    public void testNavBarMenuAndHomeLinks_NavigateTo_CorrespondingPage(String locator, String expectedURL, String expectedTitle) {
-        String logoID = "nav .brand-logo";
-        String footerLogoID = "#footer-about > div > a";
-        String homeMenu = "nav li a[href='/']";
-
-
-        getPage().locator(locator).click();
+    public void testNavBarMenu_NavigateTo_CorrespondingPage(
+            String menu, String expectedURL, String expectedTitle) {
+        HomePage homePage = new HomePage(getPage());
+        homePage.clickMenu(menu);
 
         String actualUrl = getPage().url();
         String actualTitle = getPage().title();
 
-        if (!locator.equals(logoID) || !locator.equals(footerLogoID) || !locator.equals(homeMenu)) {
+        if (!menu.equals("Home") && !menu.equals("About")) {
             Assert.assertNotEquals(BASE_URL, actualUrl);
             Assert.assertNotEquals(BASE_TITLE, actualTitle);
         }
@@ -54,13 +53,49 @@ public class NavigationTest extends BaseTest {
 
     @Test(dependsOnMethods = "testHomePage_URLAndTitle_AsExpected")
     public void testMenuAbout_ScrollsTo_FooterAboutSection() {
+        HomePage homePage = new HomePage(getPage());
+        homePage.clickAboutMenu();
 
-        getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("about")).click();
+        String footerAboutTitle = homePage.getAboutHeading().innerText();
 
-        getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        Assert.assertEquals(getPage().url(), ABOUT_URL);
+        Assert.assertEquals(footerAboutTitle, ABOUT_HEADING);
+    }
+    @Test(
+            dataProvider =  "NavButtonsTestData",
+            dataProviderClass = TestData.class,
+            dependsOnMethods = "testHomePage_URLAndTitle_AsExpected")
+    public void testNavButtons_NavigateTo_CorrespondingPage(
+            String option, String expectedURL, String expectedTitle
+    ) {
+        HomePage homePage = new HomePage(getPage());
+        homePage.clickButton(option);
 
-        String footerAboutTitle = getPage().locator("div.about-company > p:nth-child(1)").innerText();
+        String actualUrl = getPage().url();
+        String actualTitle = getPage().title();
 
-        Assert.assertEquals(footerAboutTitle, ABOUT_TITLE);
+        Assert.assertNotEquals(BASE_URL, actualUrl);
+        Assert.assertNotEquals(BASE_TITLE, actualTitle);
+        Assert.assertEquals(actualUrl, expectedURL);
+        Assert.assertEquals(actualTitle, expectedTitle);
+    }
+
+    @Test(
+            dataProvider =  "NavAndHomeLinksTestData",
+            dataProviderClass = TestData.class,
+            dependsOnMethods = "testHomePage_URLAndTitle_AsExpected")
+    public void testNavAndHomeLinks_NavigateTo_CorrespondingPage(
+            String option, String expectedURL, String expectedTitle
+    ) {
+        HomePage homePage = new HomePage(getPage());
+        homePage.clickLink(option);
+
+        String actualUrl = getPage().url();
+        String actualTitle = getPage().title();
+
+        Assert.assertNotEquals(BASE_URL, actualUrl);
+        Assert.assertNotEquals(BASE_TITLE, actualTitle);
+        Assert.assertEquals(actualUrl, expectedURL);
+        Assert.assertEquals(actualTitle, expectedTitle);
     }
 }

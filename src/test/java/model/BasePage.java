@@ -1,2 +1,17 @@
-package model;public class BasePage {
+package model;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+
+
+public abstract class BasePage {
+    private Page page;
+
+    public BasePage(Page page) {
+        this.page = page;
+    }
+
+    protected Page getPage() {
+        return page;
+    }
 }

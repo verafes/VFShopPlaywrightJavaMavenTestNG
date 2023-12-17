@@ -1,6 +1,11 @@
 import com.microsoft.playwright.*;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 
+import static utils.ProjectConstant.BASE_URL;
 
 public class BaseTest {
     private Playwright playwright;
@@ -28,7 +33,7 @@ public class BaseTest {
         context = browser.newContext();
         page = context.newPage();
         page.waitForTimeout(1000);
-        page.navigate("http://localhost:3000/");
+        page.navigate(BASE_URL);
     }
 
     @AfterMethod
@@ -43,6 +48,15 @@ public class BaseTest {
 
     public Page getPage() {
         return page;
+    }
+
+    public void setTestId(String id) {
+        playwright.selectors().setTestIdAttribute(id);
+    }
+
+    public Locator getId(String testId) {
+        setTestId("id");
+        return page.getByTestId(testId);
     }
 }
 
