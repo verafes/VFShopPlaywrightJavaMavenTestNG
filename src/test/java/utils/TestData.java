@@ -54,7 +54,7 @@ public class TestData {
     public static Object[][]NavButtonsDataProvider() {
         // String option, String expectedURL, String expectedTitle
         return new Object[][]{
-                {"submit search", SEARCH_URL, SEARCH_TITLE},
+                {"Search", SEARCH_URL, SEARCH_TITLE},
                 {"Cart", CART_URL, CART_TITLE},
                 {"Wishlist", CART_URL, CART_TITLE},
         };

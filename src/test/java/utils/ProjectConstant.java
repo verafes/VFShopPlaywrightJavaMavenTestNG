@@ -1,5 +1,10 @@
 package utils;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ProjectConstant {
 
     /* Home page */
@@ -7,6 +12,7 @@ public class ProjectConstant {
     public static final String BASE_TITLE = "VF | Elegant Clothing For Her and For Him";
     public static final String LOGO_IMG_SRC = "../img/logo-green.png";
     public static final String LOGO_URL = "/";
+    public static final String MOTTO = "Where Style Meets Elegance\nAnd Fashion Knows No Bounds";
     public static final String WOMEN_URL = BASE_URL + "women";
     public static final String WOMEN_TITLE = "VF Shop | For Her";
     public static final String MEN_URL = BASE_URL + "men";
@@ -20,6 +26,16 @@ public class ProjectConstant {
     public static final String SEARCH_PLACEHOLDER = "search brand product";
     public static final String CART_URL = BASE_URL + "cart";
     public static final String CART_TITLE = "VF Shop | Cart";
+    public static final String FOR_HER_COLLECTION_TITLE = "For Her";
+    public static final String FOR_HIM_COLLECTION_TITLE = "For Him";
+    public static final String ACCESSORIES_COLLECTION_TITLE = "Accessories";
+
+    /* sliders */
+    public static final List<String> HOME_SLIDERS_TITLES = List.of(
+            "Best Selling", "New Arrivals", "Women Hot Specials", "Shoes", "Men T-Shirt", "Cozy Winter Deals"
+    );
+
+    /* footer */
     public static final String ABOUT_HEADING = "ABOUT COMPANY:";
     public static final String ABOUT_URL = BASE_URL + "#footer-about";
     public static final String TERMS_URL = BASE_URL + "terms";

@@ -3,11 +3,12 @@ package model;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import model.base.FooterPage;
 
 public class HomePage extends FooterPage {
     private final Locator heroMotoBannerIMG = getPage()
             .getByRole(AriaRole.BANNER).locator("img");
-    private final Locator heroMotoBannerText = getPage().locator(".sub-heading");;
+    private final Locator heroMotoBannerText = getPage().locator(".sub-heading");
     private final Locator forHerLocator = getPage()
             .getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("For Her"));
     private final Locator forHimLocator = getPage()

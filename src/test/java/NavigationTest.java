@@ -15,7 +15,8 @@ public class NavigationTest extends BaseTest {
     @Test(
             dataProvider =  "NavigationBarTestData",
             dataProviderClass = TestData.class,
-            dependsOnMethods = "testHomePage_URLAndTitle_AsExpected")
+            dependsOnMethods = "testHomePage_URLAndTitle_AsExpected"
+    )
     public void testClickLogoNavigatesToHome(String menu, String expectedURL, String expectedTitle) {
         HomePage homePage = new HomePage(getPage());
         homePage.clickMenu(menu);
@@ -61,6 +62,7 @@ public class NavigationTest extends BaseTest {
         Assert.assertEquals(getPage().url(), ABOUT_URL);
         Assert.assertEquals(footerAboutTitle, ABOUT_HEADING);
     }
+
     @Test(
             dataProvider =  "NavButtonsTestData",
             dataProviderClass = TestData.class,

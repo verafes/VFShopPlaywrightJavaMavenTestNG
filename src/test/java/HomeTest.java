@@ -27,7 +27,7 @@ public class HomeTest extends BaseTest {
     }
 
     @Test
-    public void testSearchBtnTextAbdLink() {
+    public void testSearchBtnTextAndLink() {
         final String expectedUrl = "/search";
         HomePage homePage = new HomePage(getPage());
         final Locator searchBtn = homePage.getSearchBtn();
@@ -35,7 +35,7 @@ public class HomeTest extends BaseTest {
         String actualSearchBtnURL = searchBtn
                 .getAttribute("onclick")
                 .split(" = ")[1].replace("'", "");
-
+        System.out.println(actualSearchBtnURL);
         assertThat(searchBtn).isVisible();
         Assert.assertEquals(actualSearchBtnURL, expectedUrl);
     }
@@ -53,5 +53,38 @@ public class HomeTest extends BaseTest {
         Assert.assertEquals(searchPlaceholder, SEARCH_PLACEHOLDER, "Placeholder value doesn't match");
 
     }
+
+    @Test
+    public void testCartBtnTextAndLink() {
+        final String expectedUrl = "/cart";
+
+        HomePage homePage = new HomePage(getPage());
+        final Locator cartBtn = homePage.getCartBtn();
+
+        String actualHrefValue = cartBtn
+                .getAttribute("onclick")
+                .split(" = ")[1].replace("'", "");
+        System.out.println(actualHrefValue);
+        assertThat(cartBtn).isVisible();
+        Assert.assertEquals(actualHrefValue, expectedUrl);
+    }
+
+    @Test
+    public void testHeroLogoVisibility() {
+        final Locator heroLogoImg = new HomePage(getPage()).getHeroLogoIMGLocator();
+
+        assertThat(heroLogoImg).isVisible();
+    }
+
+    @Test
+    public void testHeroMottoText() {
+        final Locator motto = new HomePage(getPage()).getHeroMottoLocator();
+
+        assertThat(motto).isVisible();
+        System.out.println(motto.innerText());
+
+        Assert.assertEquals(motto.innerText(), MOTTO);
+    }
+
 
 }
