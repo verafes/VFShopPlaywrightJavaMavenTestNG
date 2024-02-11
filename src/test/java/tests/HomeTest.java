@@ -1,3 +1,5 @@
+package tests;
+
 import com.microsoft.playwright.Locator;
 import model.HomePage;
 import org.testng.Assert;
