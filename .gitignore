@@ -1,7 +1,44 @@
+### Java
+*.class
+
+### Pascakge files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Logs
+*.log
+debug.log
 target/
+logs/
+testTracing/
+videos/
+
+### Maven ###
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+config.properties
+log4j2.properties
+release.properties
+*.puml
+
+### virtual mashine crash logs
+hs_err_pid*
+replay_pid*
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

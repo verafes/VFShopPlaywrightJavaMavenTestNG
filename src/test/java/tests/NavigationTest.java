@@ -1,3 +1,5 @@
+package tests;
+
 import model.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
