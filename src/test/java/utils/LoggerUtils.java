@@ -2,6 +2,7 @@ package utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tests.BaseTest;
 
 public class LoggerUtils {
     private static final String ERROR = "❌\n";
@@ -9,10 +10,10 @@ public class LoggerUtils {
     private static final String WARNING = "⚠️";
     private static final String EXCEPTION = "❗";
 
-    private static final Logger logger = LogManager.getLogger(LoggerUtils.class.getSimpleName()); // "tests.BaseTest");
+    private static final Logger logger = LogManager.getLogger( BaseTest.class.getSimpleName()); // ("BaseTest");
 
     public static void logInfo(String message) {
-        logger.info(SUCCESS + message);
+        logger.info(message);
     }
 
     public static void logError(String message) {

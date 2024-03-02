@@ -5,12 +5,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.TestData;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static utils.ProjectConstant.*;
 
 public class NavigationTest extends BaseTest {
     @Test
+    public void testBaseUrlLanding() {
+        getPage().navigate(BASE_URL);
+
+        assertThat(getPage()).hasURL(BASE_URL + HOME_END_POINT);
+    }
+
+    @Test
     public void testHomePage_URLAndTitle_AsExpected() {
-        Assert.assertEquals(getPage().url(), BASE_URL);
+        Assert.assertEquals(getPage().url(), BASE_URL + HOME_END_POINT);
         Assert.assertEquals(getPage().title(), BASE_TITLE);
     }
 
@@ -24,12 +32,11 @@ public class NavigationTest extends BaseTest {
         homePage.clickMenu(menu);
         homePage.clickLogo();
 
-        if (!menu.equals("Home") && !menu.equals("About")) {
-            Assert.assertNotEquals(expectedURL, BASE_URL);
-            Assert.assertNotEquals(expectedTitle, BASE_TITLE);
-        }
-        Assert.assertEquals(getPage().url(), BASE_URL);
-        Assert.assertEquals(getPage().title(), BASE_TITLE);
+        String actualURL =  getPage().url();
+        String actualTitle = getPage().title();
+
+        Assert.assertEquals(actualURL, BASE_URL + HOME_END_POINT);
+        Assert.assertEquals(actualTitle, BASE_TITLE);
     }
 
     @Test(
@@ -37,8 +44,7 @@ public class NavigationTest extends BaseTest {
             dataProviderClass = TestData.class,
             dependsOnMethods = "testHomePage_URLAndTitle_AsExpected"
     )
-    public void testNavBarMenu_NavigateTo_CorrespondingPage(
-            String menu, String expectedURL, String expectedTitle) {
+    public void testNavBarMenu_NavigateTo_CorrespondingPage(String menu, String expectedURL, String expectedTitle) {
         HomePage homePage = new HomePage(getPage());
         homePage.clickMenu(menu);
 
@@ -46,7 +52,7 @@ public class NavigationTest extends BaseTest {
         String actualTitle = getPage().title();
 
         if (!menu.equals("Home") && !menu.equals("About")) {
-            Assert.assertNotEquals(BASE_URL, actualUrl);
+            Assert.assertNotEquals(BASE_URL + HOME_END_POINT, actualUrl);
             Assert.assertNotEquals(BASE_TITLE, actualTitle);
         }
 
@@ -60,7 +66,6 @@ public class NavigationTest extends BaseTest {
         homePage.clickAboutMenu();
 
         String footerAboutTitle = homePage.getAboutHeading().innerText();
-
         Assert.assertEquals(getPage().url(), ABOUT_URL);
         Assert.assertEquals(footerAboutTitle, ABOUT_HEADING);
     }
