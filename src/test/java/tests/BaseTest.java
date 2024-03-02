@@ -1,6 +1,7 @@
 package tests;
 
 import com.microsoft.playwright.*;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -18,13 +19,12 @@ public abstract class BaseTest {
                             .LaunchOptions()
                             .setHeadless(false)
                             .setSlowMo(1500)
-
             );
     private BrowserContext context;
     private Page page;
 
     @BeforeSuite
-     void checkIfPlaywrightCreatedAndBrowserLaunched() {
+    void checkIfPlaywrightCreatedAndBrowserLaunched() {
         if (playwright != null) {
             LoggerUtils.logInfo("Playwright is created");
         } else {
@@ -41,7 +41,7 @@ public abstract class BaseTest {
     }
 
     @BeforeMethod
-     void createContextAndPage() {
+    void createContextAndPage() {
         context = browser.newContext();
         LoggerUtils.logInfo("Context created");
 
@@ -73,7 +73,7 @@ public abstract class BaseTest {
     }
 
     @AfterSuite
-    protected void closeBrowserAndPlaywright() {
+    void closeBrowserAndPlaywright() {
         if (browser != null) {
             browser.close();
             LoggerUtils.logInfo("Browser closed");
@@ -84,14 +84,14 @@ public abstract class BaseTest {
         }
     }
 
+    public Page getPage() {
+        return page;
+    }
+
     private boolean isOnHomePage() {
         getPage().waitForLoadState();
 
         return getPage().url().equals(BASE_URL + HOME_END_POINT) && !page.content().isEmpty();
-    }
-
-    public Page getPage() {
-        return page;
     }
 
     protected boolean getIsOnHomePage() {
