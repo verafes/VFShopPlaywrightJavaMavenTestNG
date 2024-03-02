@@ -1,17 +1,16 @@
 package tests;
 
 import com.microsoft.playwright.*;
-import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import utils.LoggerUtils;
 
 import static utils.ProjectConstant.BASE_URL;
+import static utils.ProjectConstant.HOME_END_POINT;
 
-public class BaseTest {
+public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();;
     private final Browser browser = playwright.chromium()
             .launch(
@@ -25,9 +24,8 @@ public class BaseTest {
     private Page page;
 
     @BeforeSuite
-    protected void beforeSuite() {
+     void checkIfPlaywrightCreatedAndBrowserLaunched() {
         if (playwright != null) {
-            Reporter.log("-------Playwright is created", true);
             LoggerUtils.logInfo("Playwright is created");
         } else {
             LoggerUtils.logFatal("FATAL: Playwright is NOT created");
@@ -43,26 +41,34 @@ public class BaseTest {
     }
 
     @BeforeMethod
-    protected void beforeMethod() {
+     void createContextAndPage() {
         context = browser.newContext();
         LoggerUtils.logInfo("Context created");
 
         page = context.newPage();
         LoggerUtils.logInfo("Page created");
 
+        LoggerUtils.logInfo("Start test");
+
         page.waitForTimeout(1000);
         page.navigate(BASE_URL);
+
+        if(isOnHomePage()) {
+            LoggerUtils.logInfo("Base url is opened and content is not empty.");
+        } else {
+            LoggerUtils.logInfo("ERROR: Base url is NOT opened OR content is EMPTY.");
+        }
     }
 
     @AfterMethod
-    protected void closeContext() {
+    void closeContext() {
         if (page != null) {
             page.close();
-            System.out.println("Page closed");
+            LoggerUtils.logInfo("Page closed");
         }
         if (context != null) {
             context.close();
-            System.out.println("Context closed");
+            LoggerUtils.logInfo("Context closed");
         }
     }
 
@@ -70,16 +76,27 @@ public class BaseTest {
     protected void closeBrowserAndPlaywright() {
         if (browser != null) {
             browser.close();
-            System.out.println("Browser closed");
+            LoggerUtils.logInfo("Browser closed");
         }
         if (playwright != null) {
             playwright.close();
-            System.out.println("Playwright closed");
+            LoggerUtils.logInfo("Playwright closed");
         }
+    }
+
+    private boolean isOnHomePage() {
+        getPage().waitForLoadState();
+
+        return getPage().url().equals(BASE_URL + HOME_END_POINT) && !page.content().isEmpty();
     }
 
     public Page getPage() {
         return page;
+    }
+
+    protected boolean getIsOnHomePage() {
+
+        return isOnHomePage();
     }
 
     public void setTestId(String id) {

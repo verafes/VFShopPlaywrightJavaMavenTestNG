@@ -25,7 +25,7 @@ public class HomeTest extends BaseTest {
 
         String actualLogoUrl = logoLinkElement.getAttribute("href");
 
-        Assert.assertEquals( actualLogoUrl, LOGO_URL);
+        Assert.assertEquals( actualLogoUrl, HOME_END_POINT);
     }
 
     @Test
@@ -83,8 +83,6 @@ public class HomeTest extends BaseTest {
         final Locator motto = new HomePage(getPage()).getHeroMottoLocator();
 
         assertThat(motto).isVisible();
-        System.out.println(motto.innerText());
-
         Assert.assertEquals(motto.innerText(), MOTTO);
     }
 

@@ -9,6 +9,7 @@ import static utils.ProjectConstant.BASE_TITLE;
 import static utils.ProjectConstant.BASE_URL;
 import static utils.ProjectConstant.CART_TITLE;
 import static utils.ProjectConstant.CART_URL;
+import static utils.ProjectConstant.HOME_END_POINT;
 import static utils.ProjectConstant.MEN_TITLE;
 import static utils.ProjectConstant.MEN_URL;
 import static utils.ProjectConstant.PRIVACY_TITLE;
@@ -27,7 +28,7 @@ public class TestData {
     public static Object[][] topMenuTestDataProvider() {
 
         return new Object[][]{
-                {"Home", BASE_URL, BASE_TITLE},
+                {"Home", BASE_URL + HOME_END_POINT, BASE_TITLE},
                 {"Women", WOMEN_URL,  WOMEN_TITLE},
                 {"Men", MEN_URL, MEN_TITLE},
                 {"Shoes", SHOES_URL, SHOES_TITLE},
@@ -39,14 +40,14 @@ public class TestData {
     @DataProvider(name="LogoTestData")
     public static Object[][] logoTestDataProvider() {
         return new Object[][]{
-                {"Home", BASE_URL},
+                {"Home", BASE_URL + HOME_END_POINT},
                 {"Women", WOMEN_URL},
                 {"Men", MEN_URL},
                 {"Shoes", SHOES_URL},
                 {"Accessories", ACCESSORIES_URL},
                 {"For Her", WOMEN_URL},
                 {"For Him", MEN_URL},
-                {"Search", "nav .search-btn", SEARCH_URL, SEARCH_TITLE},
+                {"Search", "nav .search-btn", SEARCH_URL},
         };
     }
 
