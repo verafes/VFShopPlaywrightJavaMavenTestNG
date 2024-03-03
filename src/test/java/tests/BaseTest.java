@@ -7,19 +7,14 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import utils.LoggerUtils;
+import utils.runner.BrowserManager;
 
 import static utils.ProjectConstant.BASE_URL;
 import static utils.ProjectConstant.HOME_END_POINT;
 
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();;
-    private final Browser browser = playwright.chromium()
-            .launch(
-                    new BrowserType
-                            .LaunchOptions()
-                            .setHeadless(false)
-                            .setSlowMo(1500)
-            );
+    private final Browser browser = BrowserManager.createBrowser(playwright, "chromium", false, 1500);
     private BrowserContext context;
     private Page page;
 
@@ -105,6 +100,7 @@ public abstract class BaseTest {
 
     public Locator getId(String testId) {
         setTestId("id");
+
         return page.getByTestId(testId);
     }
 }
