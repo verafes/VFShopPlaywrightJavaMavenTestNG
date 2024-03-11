@@ -17,6 +17,7 @@ public final class BrowserManager {
         switch(browserName) {
             case "chromium" -> {
                 LoggerUtils.logInfo("INFO " + browserName + " launched");
+
                 return playwright.chromium()
                         .launch(new BrowserType.LaunchOptions()
                                 .setHeadless(isHeadless)
@@ -24,6 +25,7 @@ public final class BrowserManager {
             }
             case "firefox" -> {
                 LoggerUtils.logInfo("INFO " + browserName + " launched");
+
                 return playwright.firefox()
                         .launch(new BrowserType.LaunchOptions()
                                 .setHeadless(isHeadless)
@@ -31,6 +33,7 @@ public final class BrowserManager {
             }
             case "webkit" -> {
                 LoggerUtils.logInfo("INFO " + browserName + " launched");
+
                 return playwright.webkit()
                         .launch(new BrowserType.LaunchOptions()
                                 .setHeadless(isHeadless)
@@ -38,6 +41,7 @@ public final class BrowserManager {
             }
             default -> {
                 LoggerUtils.logWarning("ERROR: " + browserName + "is NOT matched any options. Chromium is launched.");
+
                 return playwright.chromium()
                         .launch(new BrowserType.LaunchOptions()
                                 .setHeadless(true)
