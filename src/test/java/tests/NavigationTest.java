@@ -24,19 +24,22 @@ public class NavigationTest extends BaseTest {
 
     @Test(
             dataProvider =  "NavigationBarTestData",
-            dataProviderClass = TestData.class,
-            dependsOnMethods = "testHomePage_URLAndTitle_AsExpected"
+            dataProviderClass = TestData.class
     )
     public void testClickLogoNavigatesToHome(String menu, String expectedURL, String expectedTitle) {
         HomePage homePage = new HomePage(getPage());
-        homePage.clickMenu(menu);
-        homePage.clickLogo();
+        if (getIsOnHomePage()) {
+            homePage.clickMenu(menu);
+            homePage.clickLogo();
 
-        String actualURL =  getPage().url();
-        String actualTitle = getPage().title();
+            String actualURL = getPage().url();
+            String actualTitle = getPage().title();
 
-        Assert.assertEquals(actualURL, BASE_URL + HOME_END_POINT);
-        Assert.assertEquals(actualTitle, BASE_TITLE);
+            Assert.assertEquals(actualURL, BASE_URL + HOME_END_POINT);
+            Assert.assertEquals(actualTitle, BASE_TITLE);
+        }  else {
+            Assert.fail();
+        }
     }
 
     @Test(

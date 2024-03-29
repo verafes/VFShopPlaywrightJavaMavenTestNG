@@ -16,6 +16,10 @@ public final class LoggerUtils {
         logger.info(message);
     }
 
+    public static void logInfoSuccess(String message) {
+        logger.info(SUCCESS + message);
+    }
+
     public static void logError(String message) {
         logger.error(ERROR + message);
     }
@@ -25,5 +29,4 @@ public final class LoggerUtils {
     public static void logWarning(String message) {
         logger.info(WARNING + message);
     }
-
 }
