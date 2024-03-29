@@ -8,8 +8,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import utils.LoggerUtils;
 
+import utils.ReportUtils;
 import utils.runner.BrowserManager;
 import utils.runner.ConfigProperties;
+
+import java.lang.reflect.Method;
 
 import static utils.ProjectConstant.BASE_URL;
 import static utils.ProjectConstant.HOME_END_POINT;
@@ -22,6 +25,9 @@ public abstract class BaseTest {
 
     @BeforeSuite
     void checkIfPlaywrightCreatedAndBrowserLaunched() {
+        ReportUtils.logReportHeader();
+        ReportUtils.logLine();
+
         if (playwright != null) {
             LoggerUtils.logInfo("Playwright is created");
         } else {
@@ -30,15 +36,18 @@ public abstract class BaseTest {
         }
 
         if(browser.isConnected()) {
-            LoggerUtils.logInfo("Browser is created");
+            LoggerUtils.logInfo("Browser " + browser.browserType().name() + " is connected.");
         } else {
-            LoggerUtils.logFatal("FATAL: Browser is NOT created");
+            LoggerUtils.logFatal("FATAL: Browser is NOT connected");
             System.exit(1);
         }
     }
 
     @BeforeMethod
-    void createContextAndPage() {
+    void createContextAndPage(Method method) {
+        ReportUtils.logLine();
+        ReportUtils.logTestName(method);
+
         context = browser.newContext();
         LoggerUtils.logInfo("Context created");
 
@@ -67,6 +76,8 @@ public abstract class BaseTest {
             context.close();
             LoggerUtils.logInfo("Context closed");
         }
+
+        ReportUtils.logLine();
     }
 
     @AfterSuite
@@ -79,6 +90,8 @@ public abstract class BaseTest {
             playwright.close();
             LoggerUtils.logInfo("Playwright closed");
         }
+
+        ReportUtils.logLine();
     }
 
     public Page getPage() {

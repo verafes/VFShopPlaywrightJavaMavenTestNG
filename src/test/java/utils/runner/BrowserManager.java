@@ -16,7 +16,6 @@ public final class BrowserManager {
 
         switch(browserName) {
             case "chromium" -> {
-                LoggerUtils.logInfo("INFO " + browserName + " launched");
 
                 return playwright.chromium()
                         .launch(new BrowserType.LaunchOptions()
@@ -24,7 +23,6 @@ public final class BrowserManager {
                                 .setSlowMo(slowMo));
             }
             case "firefox" -> {
-                LoggerUtils.logInfo("INFO " + browserName + " launched");
 
                 return playwright.firefox()
                         .launch(new BrowserType.LaunchOptions()
@@ -32,7 +30,6 @@ public final class BrowserManager {
                                 .setSlowMo(slowMo));
             }
             case "webkit" -> {
-                LoggerUtils.logInfo("INFO " + browserName + " launched");
 
                 return playwright.webkit()
                         .launch(new BrowserType.LaunchOptions()

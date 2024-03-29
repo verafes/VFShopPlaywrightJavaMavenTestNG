@@ -11,10 +11,11 @@ import java.util.Properties;
 public class ConfigProperties {
     private static Properties properties = initProperties();
 
-    public static final Map<String, String> ENVIRONMENT_CHROMIUM = selfEnvironment("browser-Name1", "isHeadless1", "slowMo3");
-    public static final Map<String, String> ENVIRONMENT_FIREFOX = selfEnvironment("browser-Name2", "isHeadless2", "slowMo3");
-    public static final Map<String, String> ENVIRONMENT_WEBKIT = selfEnvironment("browser-Name3", "isHeadless2", "slowMo3");
+    public static final Map<String, String> ENVIRONMENT_CHROMIUM = selfEnvironment("browserName1", "isHeadless1", "slowMo1");
+    public static final Map<String, String> ENVIRONMENT_FIREFOX = selfEnvironment("browserName2", "isHeadless2", "slowMo2");
+    public static final Map<String, String> ENVIRONMENT_WEBKIT = selfEnvironment("browserName3", "isHeadless3", "slowMo3");
 
+    public static final String URL = properties.getProperty("url");
 
     private static Properties initProperties() {
         properties = new Properties();
@@ -23,10 +24,10 @@ public class ConfigProperties {
             properties = new Properties();
 
         }  catch (IOException  e) { //FileNotFoundException
-            LoggerUtils.logError("ERROR: Properties file NOT found OR file corrupted");
-        } catch (Exception e) {
-            LoggerUtils.logFatal("FATAL: Properties file NOT found");
-            System.exit(1);
+            LoggerUtils.logError("ERROR: Properties file NOT found OR the file is empty OR the file is corrupted");
+//        } catch (Exception e) {
+//            LoggerUtils.logFatal("FATAL: Properties file NOT found");
+//            System.exit(1);
         }
 
         return properties;
